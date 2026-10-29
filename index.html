@@ -1,0 +1,1388 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <title>Ofrenda</title>
+</head>
+<body>
+    
+<canvas id="myCanvas">
+    <!--El elemento HTML canvas se puede utilizar para dibujar gráficos a través de 
+        secuencias de comandos (por lo general JavaScript ).-->
+</canvas>
+
+<!-- Aquí va todo el código de three.js -->
+<!-- script type="importmap" importa las librerías necesarias para three.js-->
+<script type="importmap"> 
+    {
+        "imports":{
+            "three": "./js/three.module.js",
+            "three/OrbitControls": "./js/OrbitControls.js" 
+        }
+}
+</script>
+<script type="module"> 
+//🗃️🗃️ Mandar llamar a la librería
+    import * as THREE from 'three'; 
+    import {OrbitControls} from 'three/OrbitControls';
+    console.log(OrbitControls);
+    import {RoundedBoxGeometry} from "./js/RoundedBoxGeometry.js"
+
+    import ESC01 from "./props/vela.js"
+    import ESC02 from "./props/taza.js"
+    import ESC03 from "./props/vaso.js"
+    import ESC04 from "./props/caña.js"
+    import ESC05 from "./props/flor.js"
+    import ESC06 from "./props/portaretrato.js"
+    import ESC07 from "./props/botella.js"
+    import ESC08 from "./props/mole.js"
+    import ESC09 from "./props/copal.js"
+    import ESC10 from "./props/florero.js"
+    import ESC11 from "./props/jarron.js"
+    import ESC12 from "./props/naranja.js"
+    import ESC13 from "./props/frutero.js"
+    import ESC14 from "./props/portaretrato1.js"
+    import ESC15 from "./props/pan.js"
+    import ESC16 from "./props/cruz.js"
+    import ESC17 from "./props/papel1.js"
+    import ESC18 from "./props/papel2.js"
+    import ESC19 from "./props/papel3.js"
+    import ESC20 from "./props/papel4.js"
+    import ESC21 from "./props/pipian.js"
+    import ESC22 from "./props/pollorostizado.js"
+    import ESC23 from "./props/latatun.js"
+    import ESC24 from "./props/refresco.js"
+    import ESC25 from "./props/dulce.js"
+    import ESC26 from "./props/sobregato.js"
+    import ESC27 from "./props/florero2.js"
+    import ESC28 from "./props/flor2.js"
+    import ESC29 from "./props/catrina.js"
+    import ESC30 from "./props/portaretrato2.js"
+    import ESC31 from "./props/calaverita.js"
+    import ESC32 from "./props/mantel.js"
+    import ESC33 from "./props/mantel1.js"
+    import ESC34 from "./props/mantel2.js"
+    import ESC35 from "./props/arco.js"
+
+//🕹️🕹️ Renderer - Realiza una conexión entre el código y el canvas VISUALIZA LA SALIDA
+
+    var renderer = new THREE.WebGLRenderer({
+    canvas: document.getElementById('myCanvas'), antialias: true,
+    });
+    renderer.setPixelRatio(window.decivePixelRatio);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0xf0afab);
+
+
+ 
+
+
+
+
+// 🎬 Creando nueva escena - Es el espacio donde se colocan los objetos
+    var scene = new THREE.Scene();
+
+//🎥🎥 Agregar una cámara de perspectiva
+    var camera = new THREE.PerspectiveCamera(70,window.innerWidth / window.innerHeight,0.2,2000
+      );
+    scene.add(camera);
+
+    //Settings de la cámara
+    camera.position.set(-200,150,200);
+
+    // Añadiendo los OrbitControls
+    var controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+    
+// 👌 GridHelper
+
+ var gridHelper = new THREE.GridHelper (400,400);
+ //scene.add(gridHelper);
+//
+ var axesHelper = new THREE.AxesHelper(50);
+ //scene.add(axesHelper);
+ 
+
+ //FONDO
+ 
+var loader = new THREE.TextureLoader();
+var bgTexture= loader.load('./assets/fonfoo.jpg');
+ scene.background=bgTexture;
+
+// Espacio para colocar los objetos
+ //SOMBRA 
+    renderer.shadowMap.enabled=true;
+    renderer.shadowMap.type=THREE.PCFShadowMap; 
+
+    var light2= new THREE.DirectionalLight(0xffffff,.5);
+    light2.position.set(0,200,0);
+    light2.target.position.set(0,0,0);
+
+    light2.castShadow=true;
+    light2.shadow.bias=0.01;
+    light2.shadow.mapSize.width=1024;
+    light2.shadow.mapSize.height=1024;
+
+    light2.shadow.camera.top= 25;
+    light2.shadow.camera.bottom= -40;
+    light2.shadow.camera.left= -40;
+    light2.shadow.camera.right= 50;
+    light2.shadow.camera.visible=true;
+     
+    scene.add(light2);
+
+///  💫💢🐭🐭 LUCES
+
+ // Luces
+
+ //LUZ AMBIENTAL
+var light11 = new THREE.AmbientLight(0xffffff,.4);
+scene.add(light11);
+light11.position.set(0,150,0);
+var lightA = new THREE.DirectionalLight(0xffffff,.5);
+scene.add(lightA);
+//lightA.position.set(0,150,0);
+   
+
+     var light01 = new THREE.PointLight(0xf8a523, 1, 20,0.5);
+     var light02 = new THREE.PointLight(0xbd2f28, 1, 20, 0.5);
+        light01.position.set(20,132,20);
+        light02.position.set(20,132,20);
+
+     var light011 = new THREE.PointLight(0xf8a523, 1, 20,0.5);
+     var light022 = new THREE.PointLight(0xbd2f28, 1, 20, 0.5);
+        light011.position.set(-20,132,20);
+        light022.position.set(-20,132,20);
+
+    var light0111 = new THREE.PointLight(0xf8a523, 1, 20,0.5);
+    var light0222 = new THREE.PointLight(0xbd2f28, 1, 20, 0.5);
+        light0111.position.set(-20,132,-19);
+        light0222.position.set(-20,132,-19);
+
+    var light4 = new THREE.PointLight(0xf8a523, 1, 20,0.5);
+    var light04 = new THREE.PointLight(0xbd2f28, 1, 20, 0.5);
+        light4.position.set(20,132,-19);
+        light04.position.set(20,132,-19)
+
+    var lightV = new THREE.PointLight(0xf8a523, 1, 20,0.5);
+    var lightV2 = new THREE.PointLight(0xbd2f28, 1, 20, 0.5);
+        lightV.position.set(90,47,-70);
+        lightV2.position.set(90,47,-70);
+
+    var lightV1 = new THREE.PointLight(0xf8a523, 1, 20,0.5);
+    var lightV21 = new THREE.PointLight(0xbd2f28, 1, 20, 0.5);
+        lightV1.position.set(90,47,70);
+        lightV21.position.set(90,47,70);
+
+    var lightVe = new THREE.PointLight(0xf8a523, 1, 20,0.5);
+    var lightVe1 = new THREE.PointLight(0xbd2f28, 1, 20, 0.5);
+        lightVe.position.set(55,84,70);
+        lightVe1.position.set(55,84,70);
+
+
+    var lightVe2 = new THREE.PointLight(0xf8a523, 1, 20,0.5);
+    var lightVe22 = new THREE.PointLight(0xbd2f28, 1, 20, 0.5);
+        lightVe2.position.set(-55,84,70);
+        lightVe22.position.set(-55,84,70);
+
+    var lightVe3 = new THREE.PointLight(0xf8a523, 1, 20,0.5);
+    var lightVe33 = new THREE.PointLight(0xbd2f28, 1, 20, 0.5);
+        lightVe3.position.set(-50,78,70);
+        lightVe33.position.set(-50,78,70)
+
+    var light8 = new THREE.PointLight(0xf8a523, 1, 20,0.5);
+    var light08 = new THREE.PointLight(0xbd2f28, 1, 20, 0.5);
+        light8.position.set(50,78,70);
+        light08.position.set(50,78,70)
+
+
+    var light5 = new THREE.PointLight(0xf8a523, 1, 20,0.5);
+    var light05 = new THREE.PointLight(0xbd2f28, 1, 20, 0.5);
+        light5.position.set(45,105,-45);
+        light05.position.set(45,105,-45)
+
+    var light6 = new THREE.PointLight(0xf8a523, 1, 20,0.5);
+    var light06 = new THREE.PointLight(0xbd2f28, 1, 20, 0.5);
+        light6.position.set(-45,105,-45);
+        light06.position.set(-45,105,-45)
+
+    var light7 = new THREE.PointLight(0xf8a523, 1, 20,0.5);
+    var light07 = new THREE.PointLight(0xbd2f28, 1, 20, 0.5);
+        light7.position.set(45,105,40);
+        light07.position.set(45,105,40)
+
+        var hl01 = new THREE.PointLightHelper(light6);
+       scene.add(hl01);
+        
+        var hl02 = new THREE.PointLightHelper(light06);
+        scene.add(hl02);
+
+    
+     scene.add(light01, light02, light011, light022, light0111, light0222,lightV,lightV2,lightV1,
+     lightV21,lightVe,lightVe1,lightVe2,lightVe22,lightVe3,lightVe33,light4,light04,light5,light05,
+     light06,light6,light07,light7,light8,light08);
+
+//luz1
+
+var luz_spot_01 = new THREE.SpotLight(0xBD2E7F, 1, 210, 2, 0.5, 0);
+luz_spot_01.target.position.set(-50, 0, 50); 
+//scene.add(luz_spot_01.target);
+scene.add(luz_spot_01);
+
+var helperpl01 = new THREE.SpotLightHelper(luz_spot_01);
+//scene.add(helperpl01);
+luz_spot_01.position.set(0, 210, 0);
+
+
+  
+//luz copal
+var pl09 = new THREE.PointLight(0xbd2f28, 3,20,0.8);
+    pl09.position.set(0,77,66); 
+    scene.add(pl09);
+
+    var helperpl09 = new THREE.PointLightHelper(pl09);
+    //scene.add(helperpl09);
+
+//luz copal
+var pl9 = new THREE.PointLight(0xbd2f28, 3,20,0.8);
+    pl9.position.set(0,77,-68); 
+    scene.add(pl9);
+
+    var helperpl9 = new THREE.PointLightHelper(pl9);
+    scene.add(helperpl9);
+
+
+
+//OBJETOS  ✏️✏️✏️✏️  🪶
+
+
+var intensidad = 1.3;  
+var reloj = new THREE.Clock(); 
+var velocidadluz = 6;
+function luces(){
+ 
+  //light1.intensity = (Math.cos(reloj.getElapsedTime()*velocidadluz)*intensidad)+intensidad; // Ejemplo 1, sincronizado
+  //light2.intensity = (Math.cos(reloj.getElapsedTime()*velocidadluz)*-intensidad)+intensidad;
+  
+  light01.intensity = (Math.cos(reloj.getElapsedTime()*velocidadluz)*intensidad)+intensidad; // Ejemplo 2, desincronizado
+  light02.intensity = (Math.sin(reloj.getElapsedTime()*velocidadluz)*intensidad)+intensidad;
+
+  light011.intensity = (Math.sin(reloj.getElapsedTime()*velocidadluz/2)*intensidad)+intensidad; // Ejemplo 2, desincronizado
+  light022.intensity = (Math.cos(reloj.getElapsedTime()*velocidadluz/2)*intensidad)+intensidad;
+
+  light0111.intensity = (Math.sin(reloj.getElapsedTime()*velocidadluz/4)*intensidad)+intensidad; // Ejemplo 2, desincronizado
+  light0222.intensity = (Math.cos(reloj.getElapsedTime()*velocidadluz/4)*intensidad)+intensidad;
+
+
+  lightV.intensity = (Math.sin(reloj.getElapsedTime()*velocidadluz/4)*intensidad)+intensidad; // Ejemplo 2, desincronizado
+  lightV2.intensity = (Math.cos(reloj.getElapsedTime()*velocidadluz/4)*intensidad)+intensidad;
+
+  lightV1.intensity = (Math.sin(reloj.getElapsedTime()*velocidadluz/4)*intensidad)+intensidad; // Ejemplo 2, desincronizado
+  lightV21.intensity = (Math.cos(reloj.getElapsedTime()*velocidadluz/4)*intensidad)+intensidad;
+  
+  lightVe.intensity = (Math.sin(reloj.getElapsedTime()*velocidadluz/4)*intensidad)+intensidad; // Ejemplo 2, desincronizado
+  lightVe1.intensity = (Math.cos(reloj.getElapsedTime()*velocidadluz/4)*intensidad)+intensidad;
+
+  lightVe2.intensity = (Math.sin(reloj.getElapsedTime()*velocidadluz/4)*intensidad)+intensidad; // Ejemplo 2, desincronizado
+  lightVe22.intensity = (Math.cos(reloj.getElapsedTime()*velocidadluz/4)*intensidad)+intensidad;
+
+  lightVe3.intensity = (Math.sin(reloj.getElapsedTime()*velocidadluz/4)*intensidad)+intensidad; // Ejemplo 2, desincronizado
+  lightVe33.intensity = (Math.cos(reloj.getElapsedTime()*velocidadluz/4)*intensidad)+intensidad;
+
+  light4.intensity = (Math.sin(reloj.getElapsedTime()*velocidadluz/4)*intensidad)+intensidad; // Ejemplo 2, desincronizado
+  light04.intensity = (Math.cos(reloj.getElapsedTime()*velocidadluz/4)*intensidad)+intensidad;
+
+  light5.intensity = (Math.sin(reloj.getElapsedTime()*velocidadluz/4)*intensidad)+intensidad; // Ejemplo 2, desincronizado
+  light05.intensity = (Math.cos(reloj.getElapsedTime()*velocidadluz/4)*intensidad)+intensidad;
+
+   light6.intensity = (Math.sin(reloj.getElapsedTime()*velocidadluz/4)*intensidad)+intensidad; // Ejemplo 2, desincronizado
+  light06.intensity = (Math.cos(reloj.getElapsedTime()*velocidadluz/4)*intensidad)+intensidad;
+
+  light7.intensity = (Math.sin(reloj.getElapsedTime()*velocidadluz/4)*intensidad)+intensidad; // Ejemplo 2, desincronizado
+  light07.intensity = (Math.cos(reloj.getElapsedTime()*velocidadluz/4)*intensidad)+intensidad;
+  
+  light8.intensity = (Math.sin(reloj.getElapsedTime()*velocidadluz/4)*intensidad)+intensidad; // Ejemplo 2, desincronizado
+  light08.intensity = (Math.cos(reloj.getElapsedTime()*velocidadluz/4)*intensidad)+intensidad;
+  
+}
+//PISO
+var geometryPiso = new THREE.PlaneGeometry(500, 500);
+var texturePiso = new THREE.TextureLoader().load('./assets/piso2.jpg');
+
+texturePiso.wrapS = THREE.RepeatWrapping;
+texturePiso.wrapT = THREE.RepeatWrapping;
+texturePiso.repeat.set(2,2);
+
+var materialPiso = new THREE.MeshBasicMaterial({
+    map: texturePiso,
+    color: 0xffffff,
+    side: THREE.DoubleSide
+});
+var piso = new THREE.Mesh(geometryPiso, materialPiso);
+ 
+piso.position.set(0, 1, 0);
+piso.rotation.set(-Math.PI/2, 0, 0);
+scene.add(piso);
+
+// BASE DE OFRENDA
+
+var materialNiveles = new THREE.MeshLambertMaterial({
+    color: 0x5B2A86, 
+    roughness: 0.4
+});
+
+// 1. Nivel 1
+var geometryNivel1 = new RoundedBoxGeometry(212, 40, 212, 2, 4);
+var meshNivel1 = new THREE.Mesh(geometryNivel1, materialNiveles);
+scene.add(meshNivel1);
+meshNivel1.position.set(0, 24, 0);
+meshNivel1.castShadow = true;
+meshNivel1.receiveShadow = true;
+
+// 2. Nivel 2 
+var geometryNivel2 = new RoundedBoxGeometry(160, 40, 160, 2, 4);
+var meshNivel2 = new THREE.Mesh(geometryNivel2, materialNiveles);
+scene.add(meshNivel2);
+meshNivel2.position.set(0, 50, 0); 
+meshNivel2.castShadow = true;
+meshNivel2.receiveShadow = true;
+
+// 3. Nivel 3 (
+var geometryNivel3 = new RoundedBoxGeometry(110, 40, 110, 2, 4);
+var meshNivel3 = new THREE.Mesh(geometryNivel3, materialNiveles);
+scene.add(meshNivel3);
+meshNivel3.position.set(0, 75, 0);
+meshNivel3.castShadow = true;
+meshNivel3.receiveShadow = true;
+
+// 4. Nivel 4 
+var geometryNivel4 = new RoundedBoxGeometry(60, 40, 60, 2, 4);
+var meshNivel4 = new THREE.Mesh(geometryNivel4, materialNiveles);
+scene.add(meshNivel4);
+meshNivel4.position.set(0, 95, 0);
+meshNivel4.castShadow = true;
+meshNivel4.receiveShadow = true;
+ 
+//VELA
+    const vela1=ESC01({x:20,y:113,z:20});
+    scene.add(vela1);
+    vela1.scale.set(2,2,2);
+//VELA
+    const vela2=ESC01({x:-20,y:113,z:20});
+    scene.add(vela2);
+    vela2.scale.set(2,2,2);
+
+//VELAabajo
+    const velaa=ESC01({x:50,y:68.8,z:70});
+    scene.add(velaa);
+    velaa.scale.set(1,1,1);
+
+//VELAabajo1
+    const velaa1=ESC01({x:-50,y:68.8,z:70});
+    scene.add(velaa1);
+    velaa1.scale.set(1,1,1);
+
+ //VELAabajo2
+    const velaa2=ESC01({x:-55,y:68.8,z:70});
+    scene.add(velaa2);
+    velaa2.scale.set(1.5,1.5,1.5);   
+
+//VELAabajo3
+    const velaa3=ESC01({x:55,y:68.8,z:70});
+    scene.add(velaa3);
+    velaa3.scale.set(1.5,1.5,1.5);   
+
+
+//VELAgato
+    const vela3=ESC01({x:20,y:113,z:-20});
+    scene.add(vela3);
+    vela3.scale.set(2,2,2);
+
+//VELAgato
+    const vela4=ESC01({x:-20,y:113,z:-20});
+    scene.add(vela4);
+    vela4.scale.set(2,2,2);
+
+//VELAgato
+    const vela5=ESC01({x:-45,y:95.5,z:-45});
+    scene.add(vela5);
+    vela5.scale.set(2,1,2);
+
+//VELAgato
+    const vela6=ESC01({x:45,y:95.5,z:-45});
+    scene.add(vela6);
+    vela6.scale.set(2,1,2);
+
+//Vaso
+    const vaso=ESC03({x:5,y:90,z:20});
+    scene.add(vaso);
+    vaso.scale.set(2,2,2);
+   
+//taza
+    const taza=ESC02({x:0,y:92.3,z:30});
+    scene.add(taza);
+    taza.scale.set(2,2,2);
+
+//taza2
+    const taza1=ESC02({x:50,y:41,z:92});
+    scene.add(taza1);
+    taza1.scale.set(2,2,2);
+
+//Caña
+    const caña=ESC04({x:10,y:47,z:76});
+    scene.add(caña);
+    caña.scale.set(1,1,1);
+    caña.rotation.set(Math.PI/2,0,0);
+
+//Flor
+    const flor=ESC05({x:18,y:106,z:43});
+    scene.add(flor);
+    flor.scale.set(.3,.3,.2);
+
+//Flor2
+    const flor2=ESC05({x:18,y:88,z:68});
+    scene.add(flor2);
+    flor2.scale.set(.3,.3,.2);
+
+//Flor3
+    const flor3=ESC05({x:-12,y:88,z:68});
+    scene.add(flor3);
+    flor3.scale.set(.3,.3,.2);
+
+//Flor4
+    const flor4=ESC05({x:48,y:88,z:68});
+    scene.add(flor4);
+    flor4.scale.set(.3,.3,.2);
+
+//Flor5morada
+    const flor5=ESC28({x:60,y:62,z:95});
+    scene.add(flor5);
+    flor5.scale.set(.3,.3,.2);
+
+//Flor5morada
+    const flor6=ESC28({x:18,y:62,z:95});
+    scene.add(flor6);
+    flor6.scale.set(.3,.3,.2);
+
+//Flor5morada
+    const flor7=ESC28({x:-21,y:62,z:95});
+    scene.add(flor7);
+    flor7.scale.set(.3,.3,.2);
+
+
+//POrtaretrato
+    const porta=ESC06({x:0,y:111,z:100});
+    scene.add(porta);
+    porta.scale.set(4,4,4);
+
+//POrtaretratogato
+    const porta1=ESC14({x:0,y:111,z:-100});
+    scene.add(porta1);
+    porta1.scale.set(4,4,4);
+   porta1.rotation.set(0,Math.PI, 0);
+
+//botella
+    const botella=ESC07({x:10,y:91,z:40});
+    scene.add(botella);
+    botella.scale.set(2,2,2);
+
+//botella1
+    const botella1=ESC07({x:-50,y:66,z:0});
+    scene.add(botella1);
+    botella1.scale.set(2,2,2);
+
+//mole
+    const mole=ESC08({x:20,y:92.5,z:70});
+    scene.add(mole);
+    mole.scale.set(2,2,2);
+
+//copal
+    const copal=ESC09({x:30,y:68.8,z:85});
+    scene.add(copal);
+    copal.scale.set(2,2,2);
+//copal2
+    const copal1=ESC09({x:30,y:68.8,z:-50});
+    scene.add(copal1);
+    copal1.scale.set(2,2,2);
+    
+//copal3
+    const copal3=ESC09({x:100,y:68,z:20});
+    scene.add(copal3);
+    copal3.scale.set(2,2,2);
+
+//floero
+    const florero=ESC10({x:80,y:68.8,z:95.2});
+    scene.add(florero);
+    florero.scale.set(2,3,2);
+
+//floero
+    const florero1=ESC10({x:-60,y:68.8,z:95.2});
+    scene.add(florero1);
+    florero1.scale.set(2,3,2);
+
+//floero
+    const florero2=ESC10({x:-60,y:66,z:-40});
+    scene.add(florero2);
+    florero2.scale.set(2,3,2);    
+
+//floero
+    const florero3=ESC10({x:80,y:66,z:-40});
+    scene.add(florero3);
+    florero3.scale.set(2,3,2);
+
+//Jarron1
+    const jarron1=ESC11({x:-123,y:83,z:-21});
+    scene.add(jarron1);
+    jarron1.scale.set(2,2,2);
+
+
+//Jarron
+    const jarron=ESC11({x:-40,y:31.5,z:91});
+    scene.add(jarron);
+    jarron.scale.set(2,2,2);
+
+//Frutero
+    const frutero=ESC13({x:-50,y:42,z:121});
+    scene.add(frutero);
+    frutero.scale.set(2,2,2);
+
+//naranja
+    const naranja=ESC12({x:-55,y:42,z:121});
+    scene.add(naranja);
+    naranja.scale.set(2,2,2);
+
+//pan
+    const pan=ESC15({x:-60,y:44,z:85});
+    scene.add(pan);
+    pan.scale.set(2,2,2);
+
+//pan1
+    const pan1=ESC15({x:-30,y:70,z:60});
+    scene.add(pan1);
+    pan1.scale.set(2,2,2);
+
+//pan3
+    const pan3=ESC15({x:-70,y:68,z:-40});
+    scene.add(pan3);
+    pan3.scale.set(2,2,2);
+
+//pan2
+    const pan2=ESC15({x:30,y:70,z:60});
+    scene.add(pan2);
+    pan2.scale.set(2,2,2);
+
+//cruz
+    const cruz=ESC16({x:0,y:115,z:120});
+    scene.add(cruz);
+    cruz.scale.set(6,6,6);
+
+//papel1
+    const papel1=ESC17({x:-45,y:72,z:105.3});
+    scene.add(papel1);
+    papel1.scale.set(2,2,2);
+
+//papel2
+    const papel2=ESC18({x:-15,y:72,z:105.3});
+    scene.add(papel2);
+    papel2.scale.set(2,2,2);
+
+//papel3
+    const papel3=ESC19({x:15,y:72,z:105.3});
+    scene.add(papel3);
+    papel3.scale.set(2,2,2);
+
+//papel4
+    const papel4=ESC20({x:45,y:72,z:105.3});
+    scene.add(papel4);
+    papel4.scale.set(2,2,2);
+
+//papel5
+    const papel5=ESC20({x:45,y:72,z:105.3});
+    scene.add(papel5);
+    papel5.scale.set(2,2,2);
+
+//papel6
+    const papel6=ESC17({x:15,y:90,z:80.5});
+    scene.add(papel6);
+    papel6.scale.set(2,2,2);
+    
+//papel7
+    const papel7=ESC20({x:-15,y:90,z:80.5});
+    scene.add(papel7);
+    papel7.scale.set(2,2,2);
+
+//papel8
+    const papel8=ESC20({x:-20,y:45,z:130.5});
+    scene.add(papel8);
+    papel8.scale.set(2,2,2);
+
+//papel9
+    const papel9=ESC19({x:-60,y:45,z:130.5});
+    scene.add(papel9);
+    papel9.scale.set(2,2,2);
+
+//papel10
+    const papel10=ESC18({x:60,y:45,z:130.5});
+    scene.add(papel10);
+    papel10.scale.set(2,2,2);
+
+//papel11
+    const papel11=ESC17({x:20,y:45,z:130.5});
+    scene.add(papel11);
+    papel11.scale.set(2,2,2);
+
+//papel12
+    const papel12=ESC17({x:-32,y:45,z:60});
+    scene.add(papel12);
+    papel12.scale.set(2,2,2);
+    papel12.rotation.set(0,Math.PI/2,0);
+
+//papel13
+    const papel13=ESC18({x:-32,y:45,z:30});
+    scene.add(papel13);
+    papel13.scale.set(2,2,2);
+    papel13.rotation.set(0,Math.PI/2,0);
+
+//papel14
+    const papel14=ESC19({x:-32,y:45,z:0});
+    scene.add(papel14);
+    papel14.scale.set(2,2,2);
+    papel14.rotation.set(0,Math.PI/2,0);
+
+//papel15
+    const papel15=ESC20({x:-32,y:45,z:-30});
+    scene.add(papel15);
+    papel15.scale.set(2,2,2);
+    papel15.rotation.set(0,Math.PI/2,0);
+
+//papel16
+    const papel16=ESC17({x:-32,y:45,z:-60});
+    scene.add(papel16);
+    papel16.scale.set(2,2,2);
+    papel16.rotation.set(0,Math.PI/2,0);
+
+//papel17
+    const papel17=ESC17({x:-5.3,y:70,z:-40});
+    scene.add(papel17);
+    papel17.scale.set(2,2,2);
+    papel17.rotation.set(0,Math.PI/2,0);
+
+//papel18
+    const papel18=ESC18({x:-5.3,y:70,z:-15});
+    scene.add(papel18);
+    papel18.scale.set(2,2,2);
+    papel18.rotation.set(0,Math.PI/2,0);
+
+//papel19
+    const papel19=ESC19({x:-5.3,y:70,z:15});
+    scene.add(papel19);
+    papel19.scale.set(2,2,2);
+    papel19.rotation.set(0,Math.PI/2,0);
+
+//papel20
+    const papel20=ESC20({x:-5.3,y:70,z:40});
+    scene.add(papel20);
+    papel20.scale.set(2,2,2);
+    papel20.rotation.set(0,Math.PI/2,0);
+
+//papel21
+    const papel21=ESC19({x:19.6,y:90,z:-12});
+    scene.add(papel21);
+    papel21.scale.set(2,2,2);
+    papel21.rotation.set(0,Math.PI/2,0);
+
+//papel22
+    const papel22=ESC20({x:19.6,y:90,z:15});
+    scene.add(papel22);
+    papel22.scale.set(2,2,2);
+    papel22.rotation.set(0,Math.PI/2,0);
+
+
+//pipian
+    const pipian=ESC08({x:-95,y:42,z:0});
+    scene.add(pipian);
+    pipian.scale.set(2,2,2);
+
+//pipian
+    const mole1=ESC21({x:-70,y:68,z:65});
+    scene.add(mole1);
+    mole1.scale.set(2,2,2);
+
+//taza3
+    const taza2=ESC02({x:110,y:68,z:-20});
+    scene.add(taza2);
+    taza2.scale.set(2,2,2);
+
+//refresco
+    const refresco=ESC24({x:-65,y:5,z:40});
+    scene.add(refresco);
+    refresco.scale.set(5,5,5);
+
+//refresco
+    const refresco1=ESC24({x:40,y:5,z:-100});
+    scene.add(refresco1);
+    refresco1.scale.set(5,5,5);
+
+//vaso
+    const aguav=ESC03({x:40,y:5,z:-100});
+    scene.add(aguav);
+    aguav.scale.set(2,2,2);
+
+
+//pollo rostizado
+    const pollon=ESC22({x:0,y:97,z:-44});
+    scene.add(pollon);
+    pollon.scale.set(2,2,2);
+
+// plato del pollo
+
+    const platop=ESC13({x:-30,y:95.4,z:-15});
+    scene.add(platop);
+    platop.scale.set(2,1,2);
+
+// calaverita
+
+    const cal=ESC31({x:-40,y:40,z:-100});
+    scene.add(cal);
+    cal.scale.set(2,2,2);
+    cal.rotation.set(0,-Math.PI,0);
+
+// calaverita
+
+    const cal1=ESC31({x:40,y:40,z:-100});
+    scene.add(cal1);
+    cal1.scale.set(2,2,2);
+    cal1.rotation.set(0,-Math.PI,0);
+
+// lata atun
+    const atun=ESC23({x:-60,y:73,z:-48});
+    scene.add(atun);
+    atun.scale.set(3,3,3);
+    atun.rotation.set(0,Math.PI, 0)
+
+// lata atun2
+    const atun2=ESC23({x:-10,y:73,z:-48});
+    scene.add(atun2);
+    atun2.scale.set(3,3,3);
+    atun2.rotation.set(0,Math.PI, 0)
+
+//sobre gato
+    const sobre=ESC26({x:-20,y:48,z:-70});
+    scene.add(sobre);
+    sobre.scale.set(3,3,3);
+    sobre.rotation.set(0,Math.PI, 0)
+
+//sobre gato
+    const sobre1=ESC26({x:50,y:48,z:-70});
+    scene.add(sobre1);
+    sobre1.scale.set(3,3,3);
+    sobre1.rotation.set(0,Math.PI, 0)
+
+//pang
+    const pang=ESC15({x:90,y:43,z:30});
+    scene.add(pang);
+    pang.scale.set(2,2,2);
+
+//pang1
+    const pang1=ESC15({x:90,y:43,z:-50});
+    scene.add(pang1);
+    pang1.scale.set(2,2,2);
+
+//pollo rostizado2
+    const pollon1=ESC22({x:90,y:43,z:0});
+    scene.add(pollon1);
+    pollon1.scale.set(2,2,2);
+    pollon1.rotation.set(0,-Math.PI/2,0);
+
+// plato del pollo
+
+    const platop1=ESC13({x:60,y:43,z:30});
+    scene.add(platop1);
+    platop1.scale.set(2,1,2);
+
+//VELA del lado del pollo
+    const vela7=ESC01({x:90,y:43,z:70});
+    scene.add(vela7);
+    vela7.scale.set(2,1,2);
+
+//VELA del lado del pollo
+    const vela8=ESC01({x:90,y:43,z:-70});
+    scene.add(vela8);
+    vela8.scale.set(2,1,2);
+
+
+
+//refresco
+    const refresco2=ESC24({x:100,y:30,z:-50});
+    scene.add(refresco2);
+    refresco2.scale.set(5,5,5);
+
+//botella3
+    const botella3=ESC07({x:90,y:65,z:40});
+    scene.add(botella3);
+    botella3.scale.set(2,2,2);
+    
+//floreros hasta abajo1
+    const florero5=ESC27({x:-80,y:43,z:-50});
+    scene.add(florero5);
+    florero5.scale.set(3,3,3);
+
+//floreros hasta abajo2
+    const florero6=ESC27({x:110,y:43,z:-50});
+    scene.add(florero6);
+    florero6.scale.set(3,3,3);
+
+//floreros hasta abajo3
+    const florero7=ESC27({x:110,y:43,z:140});
+    scene.add(florero7);
+    florero7.scale.set(3,3,3);
+
+//floreros hasta abajo3
+    const florero8=ESC27({x:-80,y:43,z:140});
+    scene.add(florero8);
+    florero8.scale.set(3,3,3);
+
+//catrina
+    const catrina=ESC29({x:-350,y:-50,z:80});
+    scene.add(catrina);
+    catrina.scale.set(20,20,20);
+    catrina.rotation.set(0,Math.PI/6,0);
+
+//pansote
+    const panso=ESC15({x:-140,y:50,z:-150});
+    scene.add(panso);
+    panso.scale.set(8,8,8);
+
+//Portaretrato2
+    const porta2=ESC30({x:105,y:92,z:0});
+    scene.add(porta2);
+    porta2.scale.set(3,3,3);
+    porta2.rotation.set(0,Math.PI/2,0);
+
+//VELA del lado del pollo
+    const vela9=ESC01({x:45,y:95,z:40});
+    scene.add(vela9);
+    vela9.scale.set(2,1,2);  
+
+//calaverita
+    const cala=ESC31({x:70,y:64,z:20});
+    scene.add(cala);
+    cala.scale.set(3,3,3);
+    cala.rotation.set(0,Math.PI/2,0)
+
+//calaverita
+    const cala1=ESC31({x:-95,y:38,z:10});
+    scene.add(cala1);
+    cala1.scale.set(3,3,3);
+    cala1.rotation.set(0,-Math.PI/2,0)
+
+//calaverita1
+    const cala2=ESC31({x:-40,y:88,z:5});
+    scene.add(cala2);
+    cala2.scale.set(3,3,3);
+    cala2.rotation.set(0,-Math.PI/2,0)
+
+//calaveritagrande
+    const calag=ESC31({x:-155,y:85,z:-145});
+    scene.add(calag);
+    calag.scale.set(10,10,10);
+    calag.rotation.set(0,Math.PI/6,0)
+
+//Vaso1
+    const vaso1=ESC03({x:-130,y:39,z:-60});
+    scene.add(vaso1);
+    vaso1.scale.set(2,2,2);
+//panhARA
+    const pan4=ESC15({x:45,y:95,z:-30});
+    scene.add(pan4);
+    pan4.scale.set(2,2,2);
+
+//mantel
+    const mantel=ESC32({x:-90,y:42.5,z:0});
+    scene.add(mantel);
+    mantel.scale.set(8,2,1);
+    mantel.rotation.set(0,-Math.PI/2,0);
+
+//mantel1
+    const mantel1=ESC32({x:-65,y:69,z:0});
+    scene.add(mantel1);
+    mantel1.scale.set(7,2,1);
+    mantel1.rotation.set(0,-Math.PI/2,0);
+
+//mantel2
+    const mantel2=ESC32({x:-43,y:93.5,z:0});
+    scene.add(mantel2);
+    mantel2.scale.set(6,2,.8);
+    mantel2.rotation.set(0,-Math.PI/2,0);
+//mantel3
+    const mantel3=ESC33({x:42,y:93.5,z:0});
+    scene.add(mantel3);
+    mantel3.scale.set(6,2,.9);
+    mantel3.rotation.set(0,Math.PI/2,0);
+
+//mantel4
+    const mantel4=ESC33({x:65.3,y:69,z:0});
+    scene.add(mantel4);
+    mantel4.scale.set(7,2,1);
+    mantel4.rotation.set(0,Math.PI/2,0);
+
+//mantel5
+    const mantel5=ESC33({x:90,y:42.5,z:0});
+    scene.add(mantel5)
+    mantel5.scale.set(8,2,1);
+    mantel5.rotation.set(0,Math.PI/2,0);
+
+//mantel6
+    const mantel6=ESC34({x:0,y:42.5,z:90});
+    scene.add(mantel6);
+    mantel6.scale.set(8,2,1);
+    mantel6.rotation.set(0,0,0);
+
+//mantel7
+    const mantel7=ESC34({x:0,y:68.5,z:65});
+    scene.add(mantel7);
+    mantel7.scale.set(7,2,1);
+    mantel7.rotation.set(0,0,0);
+
+//mantel8
+    const mantel8=ESC34({x:0,y:93.5,z:39});
+    scene.add(mantel8);
+    mantel8.scale.set(6,2,1);
+    mantel8.rotation.set(0,0,0);
+
+//mantel9
+    const mantel9=ESC34({x:0,y:42.5,z:-90});
+    scene.add(mantel9);
+    mantel9.scale.set(8,2,1);
+    mantel9.rotation.set(0,0,0);
+
+//mantel10
+    const mantel10=ESC34({x:0,y:68.5,z:-65});
+    scene.add(mantel10);
+    mantel10.scale.set(7,2,1);
+    mantel10.rotation.set(0,0,0);
+
+//mantel11
+    const mantel11=ESC34({x:0,y:93.5,z:-39});
+    scene.add(mantel11);
+    mantel11.scale.set(6,2,1);
+    mantel11.rotation.set(0,0,0);
+
+//ladoder 
+//arco
+    const arcoo=ESC35({x:0,y:7,z:105});
+    scene.add(arcoo);
+    arcoo.scale.set(1,1,1);
+    arcoo.rotation.set(0,0,0);
+//arco
+    const arcoo1=ESC35({x:20,y:7,z:105});
+    scene.add(arcoo1);
+    arcoo1.scale.set(1,1,1);
+    arcoo1.rotation.set(0,0,0);
+
+//arco
+    const arcoo2=ESC35({x:40,y:7,z:105});
+    scene.add(arcoo2);
+    arcoo2.scale.set(1,1,1);
+    arcoo2.rotation.set(0,0,0);
+
+//arco
+    const arcoo3=ESC35({x:60,y:7,z:105});
+    scene.add(arcoo3);
+    arcoo3.scale.set(1,1,1);
+    arcoo3.rotation.set(0,0,0);
+
+//arco
+    const arcoo4=ESC35({x:80,y:7,z:105});
+    scene.add(arcoo4);
+    arcoo4.scale.set(1,1,1);
+    arcoo4.rotation.set(0,0,0);
+
+//ladoizqu
+
+//arco
+    const arcoo11=ESC35({x:-20,y:7,z:105});
+    scene.add(arcoo11);
+    arcoo11.scale.set(1,1,1);
+    arcoo11.rotation.set(0,0,0);
+
+//arco
+    const arcoo21=ESC35({x:-40,y:7,z:105});
+    scene.add(arcoo21);
+    arcoo21.scale.set(1,1,1);
+    arcoo21.rotation.set(0,0,0);
+
+//arco
+    const arcoo31=ESC35({x:-60,y:7,z:105});
+    scene.add(arcoo31);
+    arcoo31.scale.set(1,1,1);
+    arcoo31.rotation.set(0,0,0);
+
+//arco
+    const arcoo41=ESC35({x:-80,y:7,z:105});
+    scene.add(arcoo41);
+    arcoo41.scale.set(1,1,1);
+    arcoo41.rotation.set(0,0,0);
+
+//del lado de la catrtina
+//arco
+    const arcoo421=ESC35({x:-105,y:7,z:20});
+    scene.add(arcoo421);
+    arcoo421.scale.set(1,1,1);
+    arcoo421.rotation.set(0,Math.PI/2,0);
+
+//arco
+    const arcoo420=ESC35({x:-105,y:7,z:0});
+    scene.add(arcoo420);
+    arcoo420.scale.set(1,1,1);
+    arcoo420.rotation.set(0,Math.PI/2,0);
+
+//arco
+    const arcoo422=ESC35({x:-105,y:7,z:40});
+    scene.add(arcoo422);
+    arcoo422.scale.set(1,1,1);
+    arcoo422.rotation.set(0,Math.PI/2,0);
+
+//arco
+    const arcoo423=ESC35({x:-105,y:7,z:60});
+    scene.add(arcoo423);
+    arcoo423.scale.set(1,1,1);
+    arcoo423.rotation.set(0,Math.PI/2,0);
+
+//arco
+    const arcoo424=ESC35({x:-105,y:7,z:80});
+    scene.add(arcoo424);
+    arcoo424.scale.set(1,1,1);
+    arcoo424.rotation.set(0,Math.PI/2,0);
+
+//otrolaod
+//arco
+    const arcoo5=ESC35({x:-105,y:7,z:-20});
+    scene.add(arcoo5);
+    arcoo5.scale.set(1,1,1);
+    arcoo5.rotation.set(0,Math.PI/2,0);
+
+
+//arco
+    const arcoo6=ESC35({x:-105,y:7,z:-40});
+    scene.add(arcoo6);
+    arcoo6.scale.set(1,1,1);
+    arcoo6.rotation.set(0,Math.PI/2,0);
+
+//arco
+    const arcoo7=ESC35({x:-105,y:7,z:-60});
+    scene.add(arcoo7);
+    arcoo7.scale.set(1,1,1);
+    arcoo7.rotation.set(0,Math.PI/2,0);
+
+//arco
+    const arcoo8=ESC35({x:-105,y:7,z:-80});
+    scene.add(arcoo8);
+    arcoo8.scale.set(1,1,1);
+    arcoo8.rotation.set(0,Math.PI/2,0);
+    
+//lados opuestos
+//arco
+    const arcooo=ESC35({x:0,y:7,z:-105});
+    scene.add(arcooo);
+    arcooo.scale.set(1,1,1);
+    arcooo.rotation.set(0,0,0);
+//arco
+    const arcooo1=ESC35({x:20,y:7,z:-105});
+    scene.add(arcooo1);
+    arcooo1.scale.set(1,1,1);
+    arcooo1.rotation.set(0,0,0);
+
+//arco
+    const arcooo2=ESC35({x:40,y:7,z:-105});
+    scene.add(arcooo2);
+    arcooo2.scale.set(1,1,1);
+    arcooo2.rotation.set(0,0,0);
+
+//arco
+    const arcooo3=ESC35({x:60,y:7,z:-105});
+    scene.add(arcooo3);
+    arcooo3.scale.set(1,1,1);
+    arcooo3.rotation.set(0,0,0);
+
+//arco
+    const arcooo4=ESC35({x:80,y:7,z:-105});
+    scene.add(arcooo4);
+    arcooo4.scale.set(1,1,1);
+    arcooo4.rotation.set(0,0,0);
+
+//ladoizqu
+
+//arco
+    const arcooo11=ESC35({x:-20,y:7,z:-105});
+    scene.add(arcooo11);
+    arcooo11.scale.set(1,1,1);
+    arcooo11.rotation.set(0,0,0);
+
+//arco
+    const arcooo21=ESC35({x:-40,y:7,z:-105});
+    scene.add(arcooo21);
+    arcooo21.scale.set(1,1,1);
+    arcooo21.rotation.set(0,0,0);
+
+//arco
+    const arcooo31=ESC35({x:-60,y:7,z:-105});
+    scene.add(arcooo31);
+    arcooo31.scale.set(1,1,1);
+    arcooo31.rotation.set(0,0,0);
+
+//arco
+    const arcooo41=ESC35({x:-80,y:7,z:-105});
+    scene.add(arcooo41);
+    arcooo41.scale.set(1,1,1);
+    arcooo41.rotation.set(0,0,0);
+
+//del lado de la catrtina
+//arco
+    const arcooo421=ESC35({x:105,y:7,z:20});
+    scene.add(arcooo421);
+    arcooo421.scale.set(1,1,1);
+    arcooo421.rotation.set(0,Math.PI/2,0);
+
+//arco
+    const arcooo420=ESC35({x:105,y:7,z:0});
+    scene.add(arcooo420);
+    arcooo420.scale.set(1,1,1);
+    arcooo420.rotation.set(0,Math.PI/2,0);
+
+//arco
+    const arcooo422=ESC35({x:105,y:7,z:40});
+    scene.add(arcooo422);
+    arcooo422.scale.set(1,1,1);
+    arcooo422.rotation.set(0,Math.PI/2,0);
+
+//arco
+    const arcooo423=ESC35({x:105,y:7,z:60});
+    scene.add(arcooo423);
+    arcooo423.scale.set(1,1,1);
+    arcooo423.rotation.set(0,Math.PI/2,0);
+
+//arco
+    const arcooo424=ESC35({x:105,y:7,z:80});
+    scene.add(arcooo424);
+    arcooo424.scale.set(1,1,1);
+    arcooo424.rotation.set(0,Math.PI/2,0);
+
+//otrolaod
+//arco
+    const arcooo5=ESC35({x:105,y:7,z:-20});
+    scene.add(arcooo5);
+    arcooo5.scale.set(1,1,1);
+    arcooo5.rotation.set(0,Math.PI/2,0);
+
+
+//arco
+    const arcooo6=ESC35({x:105,y:7,z:-40});
+    scene.add(arcooo6);
+    arcooo6.scale.set(1,1,1);
+    arcooo6.rotation.set(0,Math.PI/2,0);
+
+//arco
+    const arcooo7=ESC35({x:105,y:7,z:-60});
+    scene.add(arcooo7);
+    arcooo7.scale.set(1,1,1);
+    arcooo7.rotation.set(0,Math.PI/2,0);
+
+//arco
+    const arcooo8=ESC35({x:105,y:7,z:-80});
+    scene.add(arcooo8);
+    arcooo8.scale.set(1,1,1);
+    arcooo8.rotation.set(0,Math.PI/2,0);
+    
+
+//papel1
+    const papeel1=ESC17({x:-45,y:72,z:-5.2});
+    scene.add(papeel1);
+    papeel1.scale.set(2,2,2);
+
+//papel2
+    const papeel2=ESC18({x:-15,y:72,z:-5.2});
+    scene.add(papeel2);
+    papeel2.scale.set(2,2,2);
+
+//papel3
+    const papeel3=ESC19({x:15,y:72,z:-5.2});
+    scene.add(papeel3);
+    papeel3.scale.set(2,2,2);
+
+//papel4
+    const papeel4=ESC20({x:45,y:72,z:-5.2});
+    scene.add(papeel4);
+    papeel4.scale.set(2,2,2);
+
+//papel6
+    const papeel6=ESC17({x:15,y:90,z:19.6});
+    scene.add(papeel6);
+    papeel6.scale.set(2,2,2);
+    
+//papel7
+    const papeel7=ESC20({x:-15,y:90,z:19.6});
+    scene.add(papeel7);
+    papeel7.scale.set(2,2,2);
+
+//papel8
+    const papeel8=ESC20({x:-20,y:45,z:-30.4});
+    scene.add(papeel8);
+    papeel8.scale.set(2,2,2);
+
+//papel9
+    const papeel9=ESC19({x:-60,y:45,z:-30.4});
+    scene.add(papeel9);
+    papeel9.scale.set(2,2,2);
+
+//papel10
+    const papeel10=ESC18({x:60,y:45,z:-30.4});
+    scene.add(papeel10);
+    papeel10.scale.set(2,2,2);
+
+//papel11
+    const papeel11=ESC17({x:20,y:45,z:-30.4});
+    scene.add(papeel11);
+    papeel11.scale.set(2,2,2);
+
+//papel12
+    const papeel12=ESC17({x:130.3,y:45,z:60});
+    scene.add(papeel12);
+    papeel12.scale.set(2,2,2);
+    papeel12.rotation.set(0,Math.PI/2,0);
+
+//papel13
+    const papeel13=ESC18({x:130.3,y:45,z:30});
+    scene.add(papeel13);
+    papeel13.scale.set(2,2,2);
+    papeel13.rotation.set(0,Math.PI/2,0);
+
+//papel14
+    const papeel14=ESC19({x:130.3,y:45,z:0});
+    scene.add(papeel14);
+    papeel14.scale.set(2,2,2);
+    papeel14.rotation.set(0,Math.PI/2,0);
+
+//papel15
+    const papeel15=ESC20({x:130.3,y:45,z:-30});
+    scene.add(papeel15);
+    papeel15.scale.set(2,2,2);
+    papeel15.rotation.set(0,Math.PI/2,0);
+
+//papel16
+    const papeel16=ESC17({x:130.3,y:45,z:-60});
+    scene.add(papeel16);
+    papeel16.scale.set(2,2,2);
+    papeel16.rotation.set(0,Math.PI/2,0);
+
+
+//papel17
+    const papeel17=ESC17({x:105.6,y:70,z:-40});
+    scene.add(papeel17);
+    papeel17.scale.set(2,2,2);
+    papeel17.rotation.set(0,Math.PI/2,0);
+
+//papel18
+    const papeel18=ESC18({x:105.6,y:70,z:-15});
+    scene.add(papeel18);
+    papeel18.scale.set(2,2,2);
+    papeel18.rotation.set(0,Math.PI/2,0);
+
+//papel19
+    const papeel19=ESC19({x:105.6,y:70,z:15});
+    scene.add(papeel19);
+    papeel19.scale.set(2,2,2);
+    papeel19.rotation.set(0,Math.PI/2,0);
+
+//papel20
+    const papeel20=ESC20({x:105.6,y:70,z:40});
+    scene.add(papeel20);
+    papeel20.scale.set(2,2,2);
+    papeel20.rotation.set(0,Math.PI/2,0);
+
+//papel21
+    const papeel21=ESC19({x:80.7,y:90,z:-12});
+    scene.add(papeel21);
+    papeel21.scale.set(2,2,2);
+    papeel21.rotation.set(0,Math.PI/2,0);
+
+//papel22
+    const papeel22=ESC20({x:80.7,y:90,z:15});
+    scene.add(papeel22);
+    papeel22.scale.set(2,2,2);
+    papeel22.rotation.set(0,Math.PI/2,0);
+
+const grupoFlores = new THREE.Group();
+
+// Flor 1
+const florP1 = ESC05({x: 0, y: 85, z: 45});
+florP1.scale.set(.3, .3, .2);
+florP1.rotation.set(Math.PI/2, 0, 0);
+grupoFlores.add(florP1); 
+
+// Flor 2
+const florP2 = ESC28({x: -15, y: 85, z: 45});
+florP2.scale.set(.3, .3, .2);
+florP2.rotation.set(Math.PI/2, 0, 0);
+grupoFlores.add(florP2); 
+
+// Flor 3
+const florP3 = ESC05({x: -8, y: 85, z: 37});
+florP3.scale.set(.3, .3, .2);
+florP3.rotation.set(Math.PI/2, 0, 0);
+grupoFlores.add(florP3);
+scene.add(grupoFlores);
+
+
+const grupoFloresClon = grupoFlores.clone();
+grupoFloresClon.position.set(95,-52,50); 
+scene.add(grupoFloresClon);
+
+const grupoFlores2 = new THREE.Group();
+
+// Flor 1
+const florPM1 = ESC28({x: 5, y: 85, z: -45});
+florPM1.scale.set(.3, .3, .2);
+florPM1.rotation.set(Math.PI/2, 0, 0);
+grupoFlores2.add(florPM1); 
+
+// Flor 2
+const florPM2 = ESC28({x: -15, y: 85, z: -45});
+florPM2.scale.set(.3, .3, .2);
+florPM2.rotation.set(Math.PI/2, 0, 0);
+grupoFlores2.add(florPM2); 
+
+// Flor 3
+const florPM3 = ESC05({x: -8, y: 85, z: -37});
+florPM3.scale.set(.3, .3, .2);
+florPM3.rotation.set(Math.PI/2, 0, 0);
+grupoFlores2.add(florPM3);
+scene.add(grupoFlores2);
+
+
+const grupoFlores2Clon = grupoFlores2.clone();
+grupoFlores2Clon.position.set(95,-52,-50); 
+scene.add(grupoFlores2Clon);
+const grupoFlores3Clon = grupoFlores2.clone();
+grupoFlores3Clon.position.set(-45,-52,-50); 
+scene.add(grupoFlores3Clon);
+
+//🎰🎰Rendering y animación
+    requestAnimationFrame(render);
+    function render() {
+        luces();
+
+    //🪄🪄 Animación - 
+
+
+
+
+    //🎮🎮Actualización del OrbitControls para generar la suavidad de movimiento
+    controls.update();
+    //Llamado para renderizar y volver a llamar a la misma función (render)
+    renderer.render(scene, camera);
+    requestAnimationFrame(render);
+    }
+</script>
+</body>
+</html>
